@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = "linumerable.pythonanywhere.com/"
 
-#PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'time_keeper',
-#    'pwa',
+    'pwa',
 ]
 
 MIDDLEWARE = [

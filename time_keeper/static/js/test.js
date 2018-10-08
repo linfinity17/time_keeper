@@ -11,6 +11,14 @@ $(function() {
 	var time_len;
 	var pause_arr = [];
 
+		if (navigator.onLine) {
+			$("#save_link").show();
+		}
+
+		else{
+			$("#save_link").hide();
+		}
+
 		function clock() {
 		    var today = new Date();
 		    var h = today.getHours();
@@ -98,22 +106,22 @@ $(function() {
 			  var item = {
 				model: "time_keeper.TimeRecord",
 			    pk: latest_key + 1,
-				fields: {user: "test", 
-						task: "Test",
+				fields: {user: $("#user").val(), 
+						task: $("#task").val(),
 						time_length: msToTime(pause_time),
 						start_time: start_time,
 						end_time: end_time,
 						pause_stamps: pause_arr,
-						task_date: "test",
+						task_date: $("#task_date").val(),
 				}
 			  };
 			  recordsStore.add(item);
 			  return tx.complete;
 			}).then(function() {
-			  console.log('added item to the records!');
+			  alert('Item has been added to the records');
 			});
 
-//			location.reload();
+			location.reload();
 			});
 
 	clock();

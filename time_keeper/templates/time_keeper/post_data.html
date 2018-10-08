@@ -7,10 +7,6 @@
 	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
 </head>
 <body>
-	<div>
-		<p id="data"></p>
-		<button id="save">save data</button>
-	</div>
 	<script type="text/javascript">
 		$(function() {
 
@@ -18,8 +14,7 @@
 			var i = 0;
 			var data_json; 
 
-			$("#data").hide();
-			$("#save").click(function(){
+			$("#submit").click(function(){
 				alert("Data will be saved to main DB.");
 
 			});
@@ -40,17 +35,17 @@
 					  return cursor.continue().then(logItems);
 					}).then(function(){
 						data_json = JSON.stringify(test);
-						$("#data").text(data_json);
 						inputVal = document.getElementsByName('data')[0];
 						inputVal.value = data_json;
+						$("#id_data").hide();
 					});
 
 		});
 	</script>
 	<form action='' method='POST'>
-	{{form.as_p}}
+	<input type="text" name="data" required id="id_data">
 	{% csrf_token %}
-	<input type='submit'>
+	<input type='submit' id='submit' value="Save Data">
 	</form>
 </body>
 

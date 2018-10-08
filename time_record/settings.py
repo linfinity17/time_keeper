@@ -13,9 +13,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = "linumerable.pythonanywhere.com/"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-#PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'time_keeper',
-#    'pwa',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

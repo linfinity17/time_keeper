@@ -3,7 +3,7 @@
     upgradeDb.createObjectStore('records',{keyPath:'pk'});
   });
   //collect latest post from server and store in idb.
-  fetch('http://127.0.0.1:8000/getdata').then(function(response){
+  fetch('https://linumerable.pythonanywhere.com/getdata').then(function(response){
     return response.json();
   }).then(function(jsondata){
     dbPromise.then(function(db){
@@ -13,7 +13,7 @@
         for(var key in jsondata){
           console.log(key)
           if (jsondata.hasOwnProperty(key)) {
-            recordsStore.put(jsondata[key]);  
+            recordsStore.put(jsondata[key]);
           }
         }
     });
@@ -42,7 +42,7 @@
               }
               if(key == 'body'){
                 var body = '<p>'+feedsData[key]+'</p>';
-              } 
+              }
             }
             post=post+'<br>'+title+'<br>'+author+'<br>'+body+'<br>';
           }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
+</head>
+<body>
+	<div>
+		<p id="data"></p>
+		<button id="save">save data</button>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+
+			var test = [];
+			var i = 0;
+			var data_json; 
+
+			$("#data").hide();
+			$("#save").click(function(){
+				alert("Data will be saved to main DB.");
+
+			});
+
+
+			dbPromise.then(function(db) {
+					  var tx = db.transaction('records', 'readonly');
+					  var recordsStore = tx.objectStore('records');
+					  return recordsStore.openCursor();
+					}).then(function logItems(cursor) {
+					  if (!cursor) {
+					    return;
+					  }
+					  latest_key = cursor.key;
+					  console.log(cursor.value);
+					  test[i] = cursor.value;
+					  i = i + 1;
+					  return cursor.continue().then(logItems);
+					}).then(function(){
+						data_json = JSON.stringify(test);
+						$("#data").text(data_json);
+						inputVal = document.getElementsByName('data')[0];
+						inputVal.value = data_json;
+					});
+
+		});
+	</script>
+	<form action='' method='POST'>
+	{{form.as_p}}
+	{% csrf_token %}
+	<input type='submit'>
+	</form>
+</body>
+
+</html>

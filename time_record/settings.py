@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = "linumerable.pythonanywhere.com/"
 
 PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
 
@@ -27,7 +27,7 @@ SECRET_KEY = 'pke7%#9mh0_6zgzt4r8t8vllq#llh$#$-b1*))s*y(7%4w=p27'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["linumerable.pythonanywhere.com"]
 
 
 # Application definition

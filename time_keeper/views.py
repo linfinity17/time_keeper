@@ -1,18 +1,36 @@
 from django.shortcuts import render
 from django.core import serializers
-from django.http import HttpResponse
-import json
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from . import forms 
 from time_keeper import models
+import json
 
 # Create your views here.
 
+def login_page(request):
+	template='time_keeper/login.html'
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			login(request,user)
+			return HttpResponseRedirect(reverse('index'))
+		else:
+			message = "Incorrect credentials"
+			return render(request,template,{"message":message})
+	return render(request,template)
+
 def base_layout(request):
-	template='time_keeper/base.html'
+	template='time_keeper/index.html'
 	return render(request,template)
 
 def getdata(request):
-	results=models.TimeRecord.objects.all()
+	user_logged = request.user
+	results=models.TimeRecord.objects.filter(user=user_logged)
 	dict_list = []
 	for item in results:
 		data_dict = {"model": "time_keeper.TimeRecord",
@@ -32,21 +50,17 @@ def getdata(request):
 def postdata(request):
 	template='time_keeper/post_data.html'
 	form = forms.DataForm()
-	print(request)
 	if request.method == 'POST':
 		form = forms.DataForm(request.POST)
-		print("this was a post")
 		if form.is_valid():
 #			put all save code here
-			print("this was posted")
 			data_list = json.loads(form.cleaned_data['data'])
 			existing_records = []
 			for item in models.TimeRecord.objects.all():
-				existing_records.append(item.local_id)
+				existing_records.append(item.id)
 			for item in data_list:
 				label = str(item["fields"]["user"]) + "_" + str(item["pk"])
-				print(item["fields"])
-				if item["pk"] not in existing_records:
+				if label not in existing_records:
 					models.TimeRecord.objects.create(
 						id = label,
 						local_id = item["pk"],
@@ -60,16 +74,10 @@ def postdata(request):
 						) 
 			return render(request,template,{'form':form})
 
-
 	return render(request,template,{'form':form})
 
-
+@login_required(login_url="/login")
 def index(request):
 	template='time_keeper/index.html'
-	results=models.TimeRecord.objects.all()
-	context={
-		'results':results,
-	}
-	print(results)
-	return render(request,template,context)
-	
+	user = request.user
+	return render(request,template,{"user":user})

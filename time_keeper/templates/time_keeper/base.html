@@ -1,91 +1,14 @@
 <!DOCTYPE html>
 <html>
-{% load pwa %}
+{% block a %}{% endblock %}
 {% load static %}
 <head>
-	{% progressive_web_app_meta %}
+	{% block b %}{% endblock %}
 	<title>Feeds</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
 	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-
-
-	<style type="text/css">
-		.dropdown-span{
-			text-align: center;
-			color: white;
-			background-color: #5bc0de;
-		}
-		span{	
-			color: white;
-		}
-		.footer{
-			text-align: center;
-			position: absolute;
-			padding:10px;
-			color: white;
-			width: 100%;
-			bottom:0;
-		}
-		.alink{
-			text-decoration: none;
-			color: white;
-		}
-		.alink:hover{
-			text-decoration: none;
-			color: white;
-		}
-		#content{
-			padding-bottom: 5%;
-		}
-		html,body{
-			margin: 0;
-		  	padding: 0;
-		  	height: 100%;
-		}
-		.wrapper{
-			position: relative;
-			min-height: 100%;
-        }
-
-        /* Section Styles */
-
-		.main-nav {
-		  width: 100%;
-		  min-height: 30px;
-		  padding: 10px;
-		  position: fixed;
-		  text-align: center;
-		  background-color:#343a40;
-		}
-		.nav {
-		  display: flex;
-		  justify-content: space-around;
-		  font-weight: 700;
-		  list-style-type: none;
-		  margin: 0 auto;
-		  padding: 0px;
-
-		}
-    	.nav .name {
-		    display: block;
-		    margin-right: auto;
-		    color: white;
-		  }
-
-		.nav li {
-		  color: white;
-		  padding: 5px 10px 10px 10px;
-		  margin-right: 	10px;
-		}
-		.nav a {
-		  color: green;
-		  transition: all .5s;
-		}
-		.nav a:hover {
-		  color: white
-		}
-	</style>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body style="font-family: sans-serif;">
 	<div class="wrapper">
@@ -96,44 +19,13 @@
 	          <li>xxxx</li>
 	        </ul>
 	    </nav>
-		<div id="content" class="container">
-			<br><br><br><br><br><br>
-			<div id="clock"></div>
-			<p></p>
-			<br>
-			<label>User: </label>
-			<input type="text" name="user" id="user">
-			<p></p>
-			<label>Task: </label>
-			<input type="text" name="task" id="task">
-			<p></p>
-			<label>Date: </label>
-			<input type="Date" name="task_date" id="task_date">
-			<p></p>
-			<p></p>
-			<button id="start" style="margin-top: 30px;">Start</button>
-			<button id="stop" style="margin-top: 30px;">Stop</button>
-			<p></p>
-			<p></p>
-			<p id="timer"></p>
-			<p></p>
-			<p></p>
-			<p></p>
-			<p id="test2"></p>
-			<p></p>
-			<p></p>
-			<button type="submit" id="submit" style="background-color:#03c07c; color:white"> Submit </button>
-			<div id="offlinedata">
-				<!-- the news will get displayed here from indexedDB in offline mode -->
-			</div>
-			<p></p>
-			<a href="/postdata" id="save_link">go to save page</a>
-			{% block content %}{% endblock %}
+			<div>
 		<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/test.js' %}"></script>
+		<div style="margin-left:20px"></div>
+			{% block content %}{% endblock %}
 
-		</div>
 		<div class="footer bg-dark">
 		</div>
 	</div>

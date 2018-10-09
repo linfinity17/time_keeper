@@ -1,7 +1,48 @@
-
 {% extends 'time_keeper/base.html' %}
-{% block content %}
-{% load static %}
-<br><br><br>
 
+{% block a %}
+	{% load pwa %}
+{% endblock %}
+
+{% block b %}
+	{% progressive_web_app_meta %}
+{% endblock %}
+
+{% block content %}
+<div style="margin-left: 20px">
+	<br><br><br><br><br><br>
+	<div id="clock"></div>
+	<p></p>
+	<br>
+	<p>User: {{ user }}</p>
+	<p hidden id="username">{{user}}</p>
+	<label>Task: </label>
+	<input type="text" name="task" id="task">
+	<p></p>
+	<label>Date: </label>
+	<input type="Date" name="task_date" id="task_date">
+	<p></p>
+	<p></p>
+	<p id="start_time"></p>
+	<p></p>
+	<p></p>
+	<p id="stop_time"></p>
+	<button id="start" style="margin-top: 30px;">Start</button>
+	<button id="stop" style="margin-top: 30px;">Stop</button>
+	<p></p>
+	<p></p>
+	<p id="timer"></p>
+	<p></p>
+	<p></p>
+	<p></p>
+	<p id="test2"></p>
+	<p></p>
+	<p></p>
+	<button type="submit" id="submit" style="background-color:#03c07c; color:white"> Submit </button>
+	<div id="offlinedata">
+		<!-- the news will get displayed here from indexedDB in offline mode -->
+	</div>
+	<p></p>
+	<a href="/postdata" id="save_link">go to save page</a>
+</div>
 {% endblock %}

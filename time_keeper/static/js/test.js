@@ -9,7 +9,9 @@ $(function() {
 	var end_time;
 	var time_now;
 	var time_len;
-	var pause_arr = [];
+	var time_arr = [];
+	var start_flag;
+	var end_flag;
 
 		if (navigator.onLine) {
 			$("#save_link").show();
@@ -47,7 +49,7 @@ $(function() {
 		  minutes = (minutes < 10) ? "0" + minutes : minutes;
 		  seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-		  return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+		  return hours + ":" + minutes + ":" + seconds;
 		}
 
 	    function timer() {
@@ -55,7 +57,7 @@ $(function() {
 		  		time_now = new Date();
 		  		time_len =  time_now - start_time;
 		  		$("#timer").text(msToTime(pause_time + time_len));
-		  		var t = setTimeout(timer, 100);
+		  		var t = setTimeout(timer, 1000);
 			}
 		}
 
@@ -66,9 +68,11 @@ $(function() {
 			timer();
 			$("#stop").show();
 			$("#start").hide();
-			console.log(start_time);
-			pause_arr[i] = start_time;
+			time_arr[i] = start_time;
+			$("#start_time").text(time_arr[0]);
 			i = i + 1;
+			start_flag = 1;
+			end_flag = 0;
 		});
 
 		$("#stop").click(function() {
@@ -80,49 +84,60 @@ $(function() {
 	 	   $("#timer").text(msToTime(pause_time));
 	 	   $("#start").show();
 	 	   $("#stop").hide();
-	 	   pause_arr[i] = end_time;
+	 	   $("#stop_time").text(end_time);
+	 	   time_arr[i] = end_time;
 	 	   i = i + 1;
+	 	   end_flag = 1;
 		});
 
 		$("#submit").click(function() {
-			dbPromise.then(function(db) {
-			  var tx = db.transaction('records', 'readonly');
-			  var recordsStore = tx.objectStore('records');
-			  return recordsStore.openCursor();
-			}).then(function logItems(cursor) {
-			  if (!cursor) {
-			    return;
-			  }
-			  latest_key = cursor.key;
-			  console.log(cursor.value);
-			  return cursor.continue().then(logItems);
-			}).then(function() {
-			  console.log(latest_key);
-			}).then(function(){
-				return dbPromise;
-			}).then(function(db) {
-			  var tx = db.transaction('records', 'readwrite');
-			  var recordsStore = tx.objectStore('records');
-			  var item = {
-				model: "time_keeper.TimeRecord",
-			    pk: latest_key + 1,
-				fields: {user: $("#user").val(), 
-						task: $("#task").val(),
-						time_length: msToTime(pause_time),
-						start_time: start_time,
-						end_time: end_time,
-						pause_stamps: pause_arr,
-						task_date: $("#task_date").val(),
-				}
-			  };
-			  recordsStore.add(item);
-			  return tx.complete;
-			}).then(function() {
-			  alert('Item has been added to the records');
-			});
-
-			location.reload();
-			});
+			if (start_flag == 1 && end_flag == 1) { 
+				dbPromise.then(function(db) {
+				  var tx = db.transaction('records', 'readonly');
+				  var recordsStore = tx.objectStore('records');
+				  return recordsStore.openCursor();
+				}).then(function logItems(cursor) {
+				  if (!cursor) {
+				    return;
+				  }
+				  latest_key = cursor.key;
+				  console.log(cursor.value);
+				  return cursor.continue().then(logItems);
+				}).then(function() {
+				  console.log(latest_key);
+				}).then(function(){
+					return dbPromise;
+				}).then(function(db) {
+				  var tx = db.transaction('records', 'readwrite');
+				  var recordsStore = tx.objectStore('records');
+				  var item = {
+					model: "time_keeper.TimeRecord",
+				    pk: latest_key + 1,
+					fields: {user: $("#username").text(), 
+							task: $("#task").val(),
+							time_length: msToTime(pause_time),
+							start_time: time_arr[0],
+							end_time: end_time,
+							pause_stamps: time_arr,
+							task_date: $("#task_date").val(),
+					}
+				  };
+				  recordsStore.add(item);
+				  return tx.complete;
+				}).then(function() {
+				  alert('Item has been added to the records');
+				  start_flag = 0;
+				  end_flag = 0;
+				});
+				location.reload();
+			}
+			else if (start_flag != 1) {
+				alert("Timer has not been activated.")
+			}
+			else {
+				alert("Timer has not been stopped.")
+			}
+		});
 
 	clock();
 	$("#stop").hide();

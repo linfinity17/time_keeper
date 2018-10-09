@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html>
+{% extends 'time_keeper/base.html' %}
+{% block content %}
 {% load static %}
-<head>
-	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
-</head>
-<body>
+
 	<script type="text/javascript">
 		$(function() {
 
@@ -14,11 +9,9 @@
 			var i = 0;
 			var data_json; 
 
-			$("#submit").click(function(){
+			$("#submit_data").click(function(){
 				alert("Data will be saved to main DB.");
-
 			});
-
 
 			dbPromise.then(function(db) {
 					  var tx = db.transaction('records', 'readonly');
@@ -39,14 +32,17 @@
 						inputVal.value = data_json;
 						$("#id_data").hide();
 					});
-
 		});
 	</script>
-	<form action='' method='POST'>
-	<input type="text" name="data" required id="id_data">
-	{% csrf_token %}
-	<input type='submit' id='submit' value="Save Data">
-	</form>
-</body>
+	<div style="margin-left:20px">
+		<br><br><br><br><br><br>
+		<form action='' method='POST'>
+			<input type="text" name="data" required id="id_data">
+			{% csrf_token %}
+			<input type='submit' id='submit_data' value="Save Data">
+		</form>
+	</div>
 
 </html>
+
+{% endblock %}

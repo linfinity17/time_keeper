@@ -1,0 +1,23 @@
+{% extends 'time_keeper/base.html' %}
+
+{% block content %}
+{% load static %}
+
+	<div style="margin-left: 20px">
+		<br><br><br><br><br><br>
+		<p>{{message}}</p>
+		<form action='' method='POST'>
+			<label>Username: </label>
+			<input type="text" name="username" required id="user">
+			<br><br>
+			<label>Password: </label>
+			<input type="password" name="password" required id="password">
+			<br><br>
+			{% csrf_token %}
+			<input type='submit' id='submit_data' value="Login">
+		</form>
+	</div>
+
+</html>
+
+{% endblock %}

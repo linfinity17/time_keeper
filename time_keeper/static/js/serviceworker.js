@@ -15,7 +15,6 @@ self.addEventListener('fetch', function(event) {
   var requestUrl = new URL(event.request.url);
   console.log(requestUrl.pathname);
   if (requestUrl.pathname === '/logged_in') {
-        console.log("im here");
         event.waitUntil(
           caches.open(staticCacheName).then(function(cache) {
             return cache.addAll([
@@ -23,6 +22,11 @@ self.addEventListener('fetch', function(event) {
             ]);
           })
         );
+      return;
+}
+  if (requestUrl.pathname === '/logout') {
+        console.log("im here");
+        caches.delete(staticCacheName);
       return;
 }
     if (requestUrl.origin === location.origin) {

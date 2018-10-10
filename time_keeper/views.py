@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core import serializers
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from . import forms 
@@ -30,6 +30,10 @@ def login_page(request):
 			message = "Incorrect credentials"
 			return render(request,template,{"message":message})
 	return render(request,template)
+
+def logout_page(request):
+	logout(request)
+	return HttpResponseRedirect(reverse('login_page'))
 
 @login_required(login_url="/login")
 def base_layout(request):
@@ -88,4 +92,10 @@ def postdata(request):
 def index(request):
 	template='time_keeper/index.html'
 	user = request.user
-	return render(request,template,{"user":user})
+	primary_tasks = models.PrimaryTask.objects.all()
+	sub_tasks = models.SubTask.objects.all()
+	context = {"user":user,
+				"primary_tasks":primary_tasks,
+				"sub_tasks":sub_tasks,
+			}
+	return render(request,template,context)

@@ -1,6 +1,4 @@
 {% extends 'time_keeper/base.html' %}
-
-
 {% block content %}
 <div style="margin-left: 20px">
 	<br><br><br><br><br><br>
@@ -10,10 +8,22 @@
 	<p>User: {{ user }}</p>
 	<p hidden id="username">{{user}}</p>
 	<label>Task: </label>
-	<input type="text" name="task" id="task">
+	<select name = "primary_task" id="primary_task">
+	<option value="">Select Task</option>
+	{% for task in primary_tasks %}
+    <option value={{task.id}}>{{task.name}}</option>
+    {% endfor %}
+    </select>
 	<p></p>
-	<label>Date: </label>
-	<input type="Date" name="task_date" id="task_date">
+	<label>Sub-Task: </label>
+	<select name = "sub_task" id="sub_task">
+	{% for task in primary_tasks %}
+    <option value={{task.id}}>{{task.name}}</option>
+    {% endfor %}
+    </select>
+	<p></p>
+	<label hidden>Date: </label>
+	<input hidden type="Date" name="task_date" id="task_date">
 	<p></p>
 	<p></p>
 	<p id="start_time"></p>
@@ -35,7 +45,59 @@
 	<div id="offlinedata">
 		<!-- the news will get displayed here from indexedDB in offline mode -->
 	</div>
-	<p></p>
-	<a href="/postdata" id="save_link">go to save page</a>
+	<script type="text/javascript">
+	sub_task_list = [];
+	i = 1;
+	{% for task in sub_tasks %}
+		sub_task_list[i] = {};
+	    sub_task_list[i].id = '{{ task.id }}';
+	    sub_task_list[i].primary_task = '{{ task.primary_task.id }}';
+	    sub_task_list[i].name = '{{ task.name }}';
+	    i = i + 1;
+	    {% endfor %}
+	console.log(sub_task_list);
+	
+	function change_sub_task() {
+		sub_list_values = [];
+		sub_list_names = [];
+		k = 0;
+		var selected_task = document.getElementById("primary_task");
+		for (i = 1; i < sub_task_list.length; i++) {
+			if(sub_task_list[i].primary_task == selected_task.value) {
+				sub_list_values[k] = sub_task_list[i].id;
+				sub_list_names[k] = sub_task_list[i].name;
+				k = k + 1;
+			}
+		}
+
+		var selected_sub_task = document.getElementById("sub_task");
+		selected_sub_task.length = 0;
+		null_opt = document.createElement("option");
+    	null_opt.textContent = "Select Sub-Task";
+    	null_opt.value = "";
+    	selected_sub_task.appendChild(null_opt);
+
+
+		for(i = 0; i < sub_list_names.length; i++) {
+		 	var opt = sub_list_names[i];
+		 	var val = sub_list_values[i];
+			var el = document.createElement("option");
+		    el.textContent = opt;
+		    el.value = val;
+			selected_sub_task.appendChild(el);
+		}
+	}
+
+	var selected_task = document.getElementById('primary_task');
+
+	change_sub_task();
+	selected_task.addEventListener('input', function() {
+	    change_sub_task();
+	});
+
+</script>
+	
+<button><a href="/postdata" id="save_link">go to save page</a></button>
+
 </div>
 {% endblock %}

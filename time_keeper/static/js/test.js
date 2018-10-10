@@ -63,6 +63,7 @@ $(function() {
 
 
 		$("#start").click(function() {
+		    console.log($("#primary_task").val());
 			start_time = new Date();
 			flag=1;
 			timer();
@@ -91,7 +92,14 @@ $(function() {
 		});
 
 		$("#submit").click(function() {
-			if (start_flag == 1 && end_flag == 1) {
+			p_task = $("#primary_task").val();
+			s_task = $("#sub_task").val();
+
+			if (p_task == "" || s_task == "") {
+				alert("Please populate tasks");
+			}
+			
+			else if (start_flag == 1 && end_flag == 1) {
 				dbPromise.then(function(db) {
 				  var tx = db.transaction('records', 'readonly');
 				  var recordsStore = tx.objectStore('records');

@@ -3,7 +3,7 @@
     upgradeDb.createObjectStore('records',{keyPath:'pk'});
   });
   //collect latest post from server and store in idb.
-  fetch('https://linumerable.pythonanywhere.com/getdata').then(function(response){
+  fetch('/getdata').then(function(response){
     return response.json();
   }).then(function(jsondata){
     dbPromise.then(function(db){

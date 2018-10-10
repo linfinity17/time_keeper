@@ -37,7 +37,7 @@ $(function() {
 		    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
 		    return i;
 		}
-		
+
 
 		function msToTime(duration) {
 		  var milliseconds = parseInt((duration % 1000) / 100),
@@ -91,7 +91,7 @@ $(function() {
 		});
 
 		$("#submit").click(function() {
-			if (start_flag == 1 && end_flag == 1) { 
+			if (start_flag == 1 && end_flag == 1) {
 				dbPromise.then(function(db) {
 				  var tx = db.transaction('records', 'readonly');
 				  var recordsStore = tx.objectStore('records');
@@ -113,7 +113,7 @@ $(function() {
 				  var item = {
 					model: "time_keeper.TimeRecord",
 				    pk: latest_key + 1,
-					fields: {user: $("#username").text(), 
+					fields: {user: $("#username").text(),
 							task: $("#task").val(),
 							time_length: msToTime(pause_time),
 							start_time: time_arr[0],

@@ -10,6 +10,13 @@ import json
 
 # Create your views here.
 
+def redir(request):
+	return HttpResponseRedirect(reverse('login_page'))
+
+def success(request):
+	template='time_keeper/success.html'
+	return render(request,template)
+
 def login_page(request):
 	template='time_keeper/login.html'
 	if request.method == 'POST':
@@ -18,12 +25,13 @@ def login_page(request):
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
 			login(request,user)
-			return HttpResponseRedirect(reverse('index'))
+			return HttpResponseRedirect(reverse('success'))
 		else:
 			message = "Incorrect credentials"
 			return render(request,template,{"message":message})
 	return render(request,template)
 
+@login_required(login_url="/login")
 def base_layout(request):
 	template='time_keeper/index.html'
 	return render(request,template)

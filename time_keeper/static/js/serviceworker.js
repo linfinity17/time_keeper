@@ -4,7 +4,6 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
-        '/base_layout',
         'static/js/idbop.js',
         'static/js/test.js',
       ]);
@@ -14,8 +13,21 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
   var requestUrl = new URL(event.request.url);
+  console.log(requestUrl.pathname);
+  if (requestUrl.pathname === '/logged_in') {
+        console.log("im here");
+        event.waitUntil(
+          caches.open(staticCacheName).then(function(cache) {
+            return cache.addAll([
+              '/base_layout',
+            ]);
+          })
+        );
+      return;
+}
     if (requestUrl.origin === location.origin) {
-      if ((requestUrl.pathname === '/')) {
+      if ((requestUrl.pathname === '/') && !navigator.onLine) {
+          console.log("now im here");
         event.respondWith(caches.match('/base_layout'));
         return;
       }

@@ -1,4 +1,5 @@
 {% extends 'time_keeper/base.html' %}
+{% load static %}
 {% block content %}
 <div style="margin-left: 20px">
 	<br><br><br><br><br><br>
@@ -25,27 +26,36 @@
 	<label hidden>Date: </label>
 	<input hidden type="Date" name="task_date" id="task_date">
 	<p></p>
+	<table>
+	<tr>
+	<td> Start Time :</td>
+	<td id="start_time"></td>
+	</tr>
+	<tr>
+	<td> Stop Time :</td>
+	<td id="stop_time"></td>
+	</tr>
+	</table>
 	<p></p>
-	<p id="start_time"></p>
+	<button id="start">Start</button>
+	<button id="stop">Stop</button>
+	<button type="submit" id="submit" style="background-color:#03c07c; color:white;"> Submit </button>
+	<p hidden id="timer"></p>
 	<p></p>
-	<p></p>
-	<p id="stop_time"></p>
-	<button id="start" style="margin-top: 30px;">Start</button>
-	<button id="stop" style="margin-top: 30px;">Stop</button>
-	<p></p>
-	<p></p>
-	<p id="timer"></p>
-	<p></p>
-	<p></p>
-	<p></p>
-	<p id="test2"></p>
-	<p></p>
-	<p></p>
-	<button type="submit" id="submit" style="background-color:#03c07c; color:white"> Submit </button>
+	<button id="reset" style="margin-top: 10px;">Reset?</button>
 	<div id="offlinedata">
 		<!-- the news will get displayed here from indexedDB in offline mode -->
 	</div>
 	<script type="text/javascript">
+	primary_task_list = [];
+	i = 1;
+	{% for task in primary_tasks %}
+		primary_task_list[i] = {};
+	    primary_task_list[i].id = '{{ task.id }}';
+	    primary_task_list[i].name = '{{ task.name }}';
+	    i = i + 1;
+	{% endfor %}
+
 	sub_task_list = [];
 	i = 1;
 	{% for task in sub_tasks %}
@@ -54,50 +64,12 @@
 	    sub_task_list[i].primary_task = '{{ task.primary_task.id }}';
 	    sub_task_list[i].name = '{{ task.name }}';
 	    i = i + 1;
-	    {% endfor %}
-	console.log(sub_task_list);
-	
-	function change_sub_task() {
-		sub_list_values = [];
-		sub_list_names = [];
-		k = 0;
-		var selected_task = document.getElementById("primary_task");
-		for (i = 1; i < sub_task_list.length; i++) {
-			if(sub_task_list[i].primary_task == selected_task.value) {
-				sub_list_values[k] = sub_task_list[i].id;
-				sub_list_names[k] = sub_task_list[i].name;
-				k = k + 1;
-			}
-		}
-
-		var selected_sub_task = document.getElementById("sub_task");
-		selected_sub_task.length = 0;
-		null_opt = document.createElement("option");
-    	null_opt.textContent = "Select Sub-Task";
-    	null_opt.value = "";
-    	selected_sub_task.appendChild(null_opt);
-
-
-		for(i = 0; i < sub_list_names.length; i++) {
-		 	var opt = sub_list_names[i];
-		 	var val = sub_list_values[i];
-			var el = document.createElement("option");
-		    el.textContent = opt;
-		    el.value = val;
-			selected_sub_task.appendChild(el);
-		}
-	}
-
-	var selected_task = document.getElementById('primary_task');
-
-	change_sub_task();
-	selected_task.addEventListener('input', function() {
-	    change_sub_task();
-	});
-
+	{% endfor %}
 </script>
-	
-<button><a href="/postdata" id="save_link">go to save page</a></button>
+<script type="text/javascript" src="{% static 'js/test.js' %}"></script>
+
+<br><br><br>
+<a href="/postdata" id="save_link" style="margin-top: 30px;">go to save page</a>
 
 </div>
 {% endblock %}

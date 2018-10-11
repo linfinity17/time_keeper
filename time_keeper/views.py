@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from . import forms 
+from django.contrib.auth.models import User
+from . import forms
 from time_keeper import models
 import json
 
@@ -20,14 +21,14 @@ def success(request):
 def login_page(request):
 	template='time_keeper/login.html'
 	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request,user)
-			return HttpResponseRedirect(reverse('success'))
-		else:
-			message = "Incorrect credentials"
+		logged_user = request.POST['username']
+		try:
+		    user = User.objects.get(username=logged_user)
+		    user.backend = 'django.contrib.auth.backends.ModelBackend'
+		    login(request,user)
+		    return HttpResponseRedirect(reverse('success'))
+		except:
+			message = "User does not exist"
 			return render(request,template,{"message":message})
 	return render(request,template)
 
@@ -47,8 +48,9 @@ def getdata(request):
 	for item in results:
 		data_dict = {"model": "time_keeper.TimeRecord",
 			"pk": item.local_id,
-			"fields": {"user": item.user, 
-					"task": item.task,
+			"fields": {"user": item.user,
+					"primary_task": item.primary_task,
+					"sub_task": item.sub_task,
 					"time_length": item.time_length,
 					"start_time": str(item.start_time),
 					"end_time": str(item.end_time),
@@ -77,13 +79,14 @@ def postdata(request):
 						id = label,
 						local_id = item["pk"],
 						user = item["fields"]["user"],
-						task = item["fields"]["task"],
+						primary_task = item["fields"]["primary_task"],
+						sub_task = item["fields"]["sub_task"],
 						time_length = item["fields"]["time_length"],
 						start_time = item["fields"]["start_time"],
 						end_time = item["fields"]["end_time"],
 						pause_stamps = item["fields"]["pause_stamps"],
 						task_date = item["fields"]["task_date"],
-						) 
+						)
 			return render(request,template,{'form':form})
 
 	return render(request,template,{'form':form})

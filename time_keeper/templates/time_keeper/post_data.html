@@ -9,8 +9,9 @@
 			var i = 0;
 			var data_json; 
 
-			$("#submit_data").click(function(){
-				alert("Data will be saved to main DB.");
+			document.getElementById('submit_data').addEventListener('click', function() {
+				alert("Data will be saved to main DB."); 
+				console.log("test");
 			});
 
 			dbPromise.then(function(db) {
@@ -30,14 +31,14 @@
 						data_json = JSON.stringify(test);
 						inputVal = document.getElementsByName('data')[0];
 						inputVal.value = data_json;
-						$("#id_data").hide();
+						console.log(data_json);
 					});
 		});
 	</script>
 	<div style="margin-left:20px">
 		<br><br><br><br><br><br>
 		<form action='' method='POST'>
-			<input type="text" name="data" required id="id_data">
+			<input hidden type="text" name="data" required id="id_data">
 			{% csrf_token %}
 			<input type='submit' id='submit_data' value="Save Data">
 		</form>

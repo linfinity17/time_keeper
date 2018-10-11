@@ -23,12 +23,7 @@ $(function() {
 
 		function clock() {
 		    var today = new Date();
-		    var h = today.getHours();
-		    var m = today.getMinutes();
-		    var s = today.getSeconds();
-		    m = checkTime(m);
-		    s = checkTime(s);
-		    timestamp = h + ":" + m + ":" + s;
+		    timestamp = today.toLocaleTimeString();
 		    $("#clock").text(timestamp);
 		    var t = setTimeout(clock, 500);
 		}
@@ -70,7 +65,7 @@ $(function() {
 			$("#stop").show();
 			$("#start").hide();
 			time_arr[i] = start_time;
-			$("#start_time").text(time_arr[0]);
+			$("#start_time").text(start_time.toLocaleTimeString());
 			i = i + 1;
 			start_flag = 1;
 			end_flag = 0;
@@ -83,13 +78,18 @@ $(function() {
 	      	flag = 0;
 			end_time = new Date();
 	 	   $("#timer").text(msToTime(pause_time));
-	 	   $("#start").show();
 	 	   $("#stop").hide();
-	 	   $("#stop_time").text(end_time);
+  	 	   $("#submit").show();
+	 	   $("#stop_time").text(end_time.toLocaleTimeString());
 	 	   time_arr[i] = end_time;
 	 	   i = i + 1;
 	 	   end_flag = 1;
 		});
+		$("#reset").click(function() {
+			confirm("Are you sure you want to reset?");
+			location.reload();
+		});
+
 
 		$("#submit").click(function() {
 			p_task = $("#primary_task").val();
@@ -98,8 +98,10 @@ $(function() {
 			if (p_task == "" || s_task == "") {
 				alert("Please populate tasks");
 			}
-			
+
 			else if (start_flag == 1 && end_flag == 1) {
+				p_task_text = primary_task_list[p_task].name;
+				s_task_text = sub_task_list[p_task].name;
 				dbPromise.then(function(db) {
 				  var tx = db.transaction('records', 'readonly');
 				  var recordsStore = tx.objectStore('records');
@@ -122,12 +124,13 @@ $(function() {
 					model: "time_keeper.TimeRecord",
 				    pk: latest_key + 1,
 					fields: {user: $("#username").text(),
-							task: $("#task").val(),
+							primary_task: p_task_text,
+							sub_task: s_task_text,
 							time_length: msToTime(pause_time),
-							start_time: time_arr[0],
+							start_time: time_arr[0].toLocaleTimeString(),
 							end_time: end_time,
 							pause_stamps: time_arr,
-							task_date: $("#task_date").val(),
+							task_date: time_arr[0].toLocaleDateString(),
 					}
 				  };
 				  recordsStore.add(item);
@@ -149,5 +152,45 @@ $(function() {
 
 	clock();
 	$("#stop").hide();
+	$("#submit").hide();
+
+	function change_sub_task() {
+		sub_list_values = [];
+		sub_list_names = [];
+		k = 0;
+		var selected_task = document.getElementById("primary_task");
+		for (i = 1; i < sub_task_list.length; i++) {
+			if(sub_task_list[i].primary_task == selected_task.value) {
+				sub_list_values[k] = sub_task_list[i].id;
+				sub_list_names[k] = sub_task_list[i].name;
+				k = k + 1;
+			}
+		}
+
+		var selected_sub_task = document.getElementById("sub_task");
+		selected_sub_task.length = 0;
+		null_opt = document.createElement("option");
+		null_opt.textContent = "Select Sub-Task";
+		null_opt.value = "";
+		selected_sub_task.appendChild(null_opt);
+
+
+		for(i = 0; i < sub_list_names.length; i++) {
+		 	var opt = sub_list_names[i];
+		 	var val = sub_list_values[i];
+			var el = document.createElement("option");
+		    el.textContent = opt;
+		    el.value = val;
+			selected_sub_task.appendChild(el);
+		}
+	}
+
+	var selected_task = document.getElementById('primary_task');
+
+	change_sub_task();
+	selected_task.addEventListener('input', function() {
+	    change_sub_task();
+	});
+
 });
 

@@ -11,7 +11,7 @@ class TimeRecord(models.Model):
 	start_time=models.DateTimeField()
 	end_time=models.DateTimeField()
 	pause_stamps=models.TextField(null=True)
-	task_date=models.CharField(max_length=100)
+	task_date=models.DateTimeField()
 
 class PrimaryTask(models.Model):
     id=models.IntegerField(primary_key=True)
@@ -21,7 +21,7 @@ class PrimaryTask(models.Model):
         return self.name
 
 class SubTask(models.Model):
-    id=models.IntegerField(primary_key=True)
+    id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=255)
     primary_task=models.ForeignKey('PrimaryTask',on_delete=models.SET_NULL,null=True)
 

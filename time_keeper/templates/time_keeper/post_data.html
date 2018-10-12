@@ -23,7 +23,6 @@
 					    return;
 					  }
 					  latest_key = cursor.key;
-					  console.log(cursor.value);
 					  test[i] = cursor.value;
 					  i = i + 1;
 					  return cursor.continue().then(logItems);
@@ -31,7 +30,6 @@
 						data_json = JSON.stringify(test);
 						inputVal = document.getElementsByName('data')[0];
 						inputVal.value = data_json;
-						console.log(data_json);
 					});
 		});
 	</script>
@@ -43,7 +41,11 @@
 			<input type='submit' id='submit_data' value="Save Data">
 		</form>
 	</div>
-
+	<div>
+		<table id="offline_data">
+		<!-- display here --> 
+		</table>
+	</div>
 </html>
 
 {% endblock %}

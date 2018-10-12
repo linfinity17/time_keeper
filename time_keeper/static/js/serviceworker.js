@@ -27,6 +27,16 @@ self.addEventListener('fetch', function(event) {
   if (requestUrl.pathname === '/logout') {
         console.log("im here");
         caches.delete(staticCacheName);
+        var req = indexedDB.deleteDatabase('time-db');
+        req.onsuccess = function () {
+            console.log("Deleted database successfully");
+        };
+        req.onerror = function () {
+            console.log("Couldn't delete database");
+        };
+        req.onblocked = function () {
+            console.log("Couldn't delete database due to the operation being blocked");
+        };
       return;
 }
     if (requestUrl.origin === location.origin) {

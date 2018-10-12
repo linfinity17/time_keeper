@@ -1,8 +1,9 @@
 $(function() {
 	var i = 0;
+	var time_i = 0;
 	var flag = 0;
 	var remainingTime = 0;
-	var pause_time = 0;
+	var running_time = 0;
 	var latest_key=0;
 	var timestamp;
 	var start_time;
@@ -51,7 +52,7 @@ $(function() {
 		  	if (flag == 1) {
 		  		time_now = new Date();
 		  		time_len =  time_now - start_time;
-		  		$("#timer").text(msToTime(pause_time + time_len));
+		  		$("#timer").text(msToTime(running_time + time_len));
 		  		var t = setTimeout(timer, 1000);
 			}
 		}
@@ -64,25 +65,26 @@ $(function() {
 			timer();
 			$("#stop").show();
 			$("#start").hide();
-			time_arr[i] = start_time;
+			time_arr[time_i] = start_time;
 			$("#start_time").text(start_time.toLocaleTimeString());
-			i = i + 1;
+			console.log(time_arr[time_i]);
+			time_i = time_i + 1;
 			start_flag = 1;
 			end_flag = 0;
 		});
 
 		$("#stop").click(function() {
 			if (flag == 1) {
-	      		pause_time = pause_time + time_len;
+	      		running_time = running_time + time_len;
 	      	}
 	      	flag = 0;
 			end_time = new Date();
-	 	   $("#timer").text(msToTime(pause_time));
+	 	   $("#timer").text(msToTime(running_time));
 	 	   $("#stop").hide();
   	 	   $("#submit").show();
 	 	   $("#stop_time").text(end_time.toLocaleTimeString());
-	 	   time_arr[i] = end_time;
-	 	   i = i + 1;
+	 	   time_arr[time_i] = end_time;
+	 	   time_i = time_i + 1;
 	 	   end_flag = 1;
 		});
 		$("#reset").click(function() {
@@ -120,19 +122,21 @@ $(function() {
 				}).then(function(db) {
 				  var tx = db.transaction('records', 'readwrite');
 				  var recordsStore = tx.objectStore('records');
+				  console.log(time_arr);
 				  var item = {
 					model: "time_keeper.TimeRecord",
 				    pk: latest_key + 1,
 					fields: {user: $("#username").text(),
 							primary_task: p_task_text,
 							sub_task: s_task_text,
-							time_length: msToTime(pause_time),
-							start_time: time_arr[0].toLocaleTimeString(),
+							time_length: msToTime(running_time),
+							start_time: time_arr[0],
 							end_time: end_time,
 							pause_stamps: time_arr,
-							task_date: time_arr[0].toLocaleDateString(),
+							task_date: time_arr[0],
 					}
 				  };
+				  console.log(item);
 				  recordsStore.add(item);
 				  return tx.complete;
 				}).then(function() {

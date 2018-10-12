@@ -41,6 +41,7 @@ def base_layout(request):
 	template='time_keeper/index.html'
 	return render(request,template)
 
+
 def getdata(request):
 	user_logged = request.user
 	results=models.TimeRecord.objects.filter(user=user_logged)
@@ -52,10 +53,10 @@ def getdata(request):
 					"primary_task": item.primary_task,
 					"sub_task": item.sub_task,
 					"time_length": item.time_length,
-					"start_time": str(item.start_time),
-					"end_time": str(item.end_time),
+					"start_time": item.start_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
+					"end_time": item.end_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
 					"pause_stamps": item.pause_stamps,
-					"task_date": item.task_date,
+					"task_date": item.task_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
 					}
 				}
 		dict_list.append(data_dict)

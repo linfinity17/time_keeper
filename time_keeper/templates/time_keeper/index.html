@@ -2,71 +2,56 @@
 {% load static %}
 {% block content %}
 <div style="margin-left: 20px">
-	<br><br><br><br><br><br>
+	<br><br><br><br>
 	<div id="clock"></div>
 	<p></p>
 	<br>
-	<p>User: {{ user }}</p>
-	<p hidden id="username">{{user}}</p>
-	<label>Task: </label>
-	<select name = "primary_task" id="primary_task">
-	<option value="">Select Task</option>
-	{% for task in primary_tasks %}
-    <option value={{task.id}}>{{task.name}}</option>
-    {% endfor %}
-    </select>
-	<p></p>
-	<label>Sub-Task: </label>
-	<select name = "sub_task" id="sub_task">
-	{% for task in primary_tasks %}
-    <option value={{task.id}}>{{task.name}}</option>
-    {% endfor %}
-    </select>
-	<p></p>
-	<label hidden>Date: </label>
-	<input hidden type="Date" name="task_date" id="task_date">
-	<p></p>
 	<table>
 	<tr>
-	<td> Start Time :</td>
+	<td>User: </td>
+	<td>{{ user }}</td>
+	</tr>
+	<tr>
+	<td><label>Task: </label></td>
+	<td>
+	<select name = "primary_task" id="primary_task">
+	<option value="">Select Task</option>
+    </select>
+    </td>
+    </tr>
+	<p></p>
+	<tr>
+	<td><label>Sub-Task: </label></td>
+	<td>
+	<select name = "sub_task" id="sub_task">
+    </select>
+    </td>
+    </tr>
+	<tr>
+	<td> Start Time: </td>
 	<td id="start_time"></td>
 	</tr>
 	<tr>
-	<td> Stop Time :</td>
+	<td> Stop Time: </td>
 	<td id="stop_time"></td>
 	</tr>
 	</table>
 	<p></p>
-	<button id="start">Start</button>
-	<button id="stop">Stop</button>
-	<button type="submit" id="submit" style="background-color:#03c07c; color:white;"> Submit </button>
+	<label hidden>Date: </label>
+	<input hidden type="Date" name="task_date" id="task_date">
+	<p></p>
+
+	<p></p>
+	<button id="start" class="start">Start</button>
+	<button id="stop" class="stop">Stop</button>
+	<button type="submit" class="submit" id="submit" style="background-color:#03c07c; color:white;"> Submit </button>
 	<p hidden id="timer"></p>
 	<p></p>
-	<button id="reset" style="margin-top: 10px;">Reset?</button>
-	<script type="text/javascript">
-	primary_task_list = [];
-	i = 1;
-	{% for task in primary_tasks %}
-		primary_task_list[i] = {};
-	    primary_task_list[i].id = '{{ task.id }}';
-	    primary_task_list[i].name = '{{ task.name }}';
-	    i = i + 1;
-	{% endfor %}
-
-	sub_task_list = [];
-	i = 1;
-	{% for task in sub_tasks %}
-		sub_task_list[i] = {};
-	    sub_task_list[i].id = '{{ task.id }}';
-	    sub_task_list[i].primary_task = '{{ task.primary_task.id }}';
-	    sub_task_list[i].name = '{{ task.name }}';
-	    i = i + 1;
-	{% endfor %}
-</script>
+	<button id="reset" style="margin-top: 10px; display:none">Reset?</button>
 <script type="text/javascript" src="{% static 'js/test.js' %}"></script>
 
 <br><br><br>
-<a href="/postdata" id="save_link" style="margin-top: 30px;">go to save page</a>
+<button style="padding:5px 5px"><a href="/postdata" id="save_link" style="color:black">Go to Save Page</a></button>
 
 </div>
 {% endblock %}

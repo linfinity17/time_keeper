@@ -7,11 +7,11 @@
 
 			var test = [];
 			var i = 0;
-			var data_json; 
+			var data_json;
+			var record_index = 1;
 
 			document.getElementById('submit_data').addEventListener('click', function() {
-				alert("Data will be saved to main DB."); 
-				console.log("test");
+				alert("Data will be saved to main DB.");
 			});
 
 			dbPromise.then(function(db) {
@@ -22,9 +22,13 @@
 					  if (!cursor) {
 					    return;
 					  }
-					  latest_key = cursor.key;
-					  test[i] = cursor.value;
-					  i = i + 1;
+					  if (cursor.value.model =="time_keeper.TimeRecord"){
+						  latest_key = cursor.key;
+						  test[i] = cursor.value;
+						  test[i].pk = record_index;
+						  i = i + 1;
+						  record_index = record_index + 1;
+						}
 					  return cursor.continue().then(logItems);
 					}).then(function(){
 						data_json = JSON.stringify(test);
@@ -38,12 +42,13 @@
 		<form action='' method='POST'>
 			<input hidden type="text" name="data" required id="id_data">
 			{% csrf_token %}
-			<input type='submit' id='submit_data' value="Save Data">
+			<input type='submit' class='submit' id='submit_data' value="Save Data">
 		</form>
 	</div>
-	<div>
+	<div style="transform-origin: top left ; transform: scale(.8)">
+		<br><br>
 		<table id="offline_data">
-		<!-- display here --> 
+		<!-- display here -->
 		</table>
 	</div>
 </html>

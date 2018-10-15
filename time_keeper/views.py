@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,7 +11,7 @@ import json
 # Create your views here.
 
 def redir(request):
-	return HttpResponseRedirect(reverse('login_page'))
+	return HttpResponseRedirect(reverse('index'))
 
 def success(request):
 	template='time_keeper/success.html'
@@ -21,7 +20,7 @@ def success(request):
 def login_page(request):
 	template='time_keeper/login.html'
 	if request.method == 'POST':
-		logged_user = request.POST['username']
+		logged_user = request.POST['username'].strip()
 		try:
 		    user = User.objects.get(username=logged_user)
 		    user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -44,22 +43,60 @@ def base_layout(request):
 
 def getdata(request):
 	user_logged = request.user
-	results=models.TimeRecord.objects.filter(user=user_logged)
 	dict_list = []
+	results=models.TimeRecord.objects.filter(user=user_logged)
+	if results:
+		for item in results:
+			data_dict = {"model": "time_keeper.TimeRecord",
+				"pk": item.local_id,
+				"fields": {"user": item.user,
+						"primary_task": item.primary_task,
+						"sub_task": item.sub_task,
+						"time_length": item.time_length,
+						"start_time": item.start_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
+						"end_time": item.end_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
+						"pause_stamps": item.pause_stamps,
+						"task_date": item.task_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+						}
+					}
+			pk = item.local_id
+			dict_list.append(data_dict)
+		pk += 1
+	else:
+		pk = 1
+
+	results=models.PrimaryTask.objects.all()
 	for item in results:
-		data_dict = {"model": "time_keeper.TimeRecord",
-			"pk": item.local_id,
-			"fields": {"user": item.user,
-					"primary_task": item.primary_task,
-					"sub_task": item.sub_task,
-					"time_length": item.time_length,
-					"start_time": item.start_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
-					"end_time": item.end_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
-					"pause_stamps": item.pause_stamps,
-					"task_date": item.task_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+		data_dict = {"model": "time_keeper.PrimaryTask",
+			"pk": pk,
+			"fields": {"id": item.id,
+					"name" : item.name,
 					}
 				}
+		pk += 1
 		dict_list.append(data_dict)
+
+	results=models.SubTask.objects.all()
+	sub_task_list = []
+	for item in results:
+		data_dict = {"model": "time_keeper.SubTask",
+			"order1" : item.primary_task.id,
+			"order2" : item.id,
+			"fields": {"id": item.id,
+					"name" : item.name,
+					"primary_task" : item.primary_task.id,
+					}
+				}
+		sub_task_list.append(data_dict)
+	ordered_list = sorted(sub_task_list,key=lambda k: k['order2'])
+	ordered_list = sorted(ordered_list,key=lambda k: k['order1'])
+	for item in ordered_list:
+		item['pk'] = pk
+		del item['order1']
+		del item['order2']
+		pk += 1
+		dict_list.append(item)
+
 	return HttpResponse(json.dumps(dict_list))
 
 def postdata(request):

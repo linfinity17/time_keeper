@@ -126,3 +126,25 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+#PWA Web App requirements
+
+PWA_APP_NAME = 'Ching Dynasty'
+PWA_APP_DESCRIPTION = "Time Keeper"
+PWA_APP_THEME_COLOR = '#0A0302'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_START_URL = '/'
+PWA_APP_ICONS = [
+  {
+    "src": "/static/images/shio-192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  },
+  {
+    "src": "/static/images/shio-512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }
+]

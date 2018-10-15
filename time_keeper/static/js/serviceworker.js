@@ -6,6 +6,8 @@ self.addEventListener('install', function(event) {
       return cache.addAll([
         'static/js/idbop.js',
         'static/js/test.js',
+        'static/js/serviceworker.js',
+        'static/css/style.css',
       ]);
     })
   );
@@ -18,7 +20,8 @@ self.addEventListener('fetch', function(event) {
         event.waitUntil(
           caches.open(staticCacheName).then(function(cache) {
             return cache.addAll([
-              '/base_layout',
+              '/timer',
+              '/getdata',
             ]);
           })
         );
@@ -39,13 +42,12 @@ self.addEventListener('fetch', function(event) {
         };
       return;
 }
-    if (requestUrl.origin === location.origin) {
+
       if ((requestUrl.pathname === '/') && !navigator.onLine) {
-          console.log("now im here");
-        event.respondWith(caches.match('/base_layout'));
+        event.respondWith(caches.match('/timer'));
         return;
       }
-    }
+
     event.respondWith(
       caches.match(event.request).then(function(response) {
         return response || fetch(event.request);

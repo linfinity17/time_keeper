@@ -4,23 +4,59 @@
 {% load static %}
 <head>
 	{% progressive_web_app_meta %}
+	<link rel="manifest" href="{% static 'manifest.json' %}">
 	<title>Timer App</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
 	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body style="font-family: sans-serif;">
+<body style="font-family: sans-serif;font-size:120%">
 	<div class="wrapper">
 	    <nav class="main-nav">
 	        <ul class="nav">
-	          <li class="name">Ching Dynasty</li>
-	          <li><a href="/logout">Logout</a></li>
+	          <li class="name"><a id="main_header" href="#">Ching Dynasty</a></li>
+	          <li><a id="logout" href="#">Logout</a></li>
 	        </ul>
 	    </nav>
 			<div>
 		<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
 		<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
+		<script type="text/javascript">
+			document.getElementById("logout").onclick = function(){
+				if (window.location.pathname == "/login") {
+					document.getElementById("logout").href = "#";
+					return;
+				}
+				else{
+				ans = confirm("Are you sure you want to logout? \n\n Make sure to save data! All unsaved data will be lost.");
+					if (ans) {
+						document.getElementById("logout").href = "/logout";
+					}
+					else {
+						document.getElementById("logout").href = "#";
+					}
+				}
+			}
+
+			if (window.location.pathname == "/login") {
+				document.getElementById("logout").hidden = true;
+			}
+
+			else{
+				document.getElementById("logout").hidden = false;
+			}
+
+			if(navigator.onLine) {
+				document.getElementById("main_header").href = "/timer";
+				document.getElementById("logout").hidden = false;
+			}
+			else{
+				document.getElementById("main_header").href = "#";
+				document.getElementById("logout").hidden = true;
+			}
+
+		</script>
 		<div style="margin-left:20px"></div>
 			{% block content %}{% endblock %}
 

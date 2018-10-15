@@ -59,7 +59,6 @@ $(function() {
 
 
 		$("#start").click(function() {
-		    console.log($("#primary_task").val());
 			start_time = new Date();
 			flag=1;
 			timer();
@@ -67,7 +66,6 @@ $(function() {
 			$("#start").hide();
 			time_arr[time_i] = start_time;
 			$("#start_time").text(start_time.toLocaleTimeString());
-			console.log(time_arr[time_i]);
 			time_i = time_i + 1;
 			start_flag = 1;
 			end_flag = 0;
@@ -102,8 +100,13 @@ $(function() {
 			}
 
 			else if (start_flag == 1 && end_flag == 1) {
-				p_task_text = primary_task_list[p_task].name;
-				s_task_text = sub_task_list[p_task].name;
+				p_task_text = primary_task_list[p_task].name;	
+				s_task_text = sub_task_list[s_task].name;
+			
+				console.log(p_task);
+				console.log(p_task_text);
+				console.log(s_task);
+				console.log(s_task_text);
 				dbPromise.then(function(db) {
 				  var tx = db.transaction('records', 'readonly');
 				  var recordsStore = tx.objectStore('records');
@@ -113,16 +116,12 @@ $(function() {
 				    return;
 				  }
 				  latest_key = cursor.key;
-				  console.log(cursor.value);
 				  return cursor.continue().then(logItems);
-				}).then(function() {
-				  console.log(latest_key);
 				}).then(function(){
 					return dbPromise;
 				}).then(function(db) {
 				  var tx = db.transaction('records', 'readwrite');
 				  var recordsStore = tx.objectStore('records');
-				  console.log(time_arr);
 				  var item = {
 					model: "time_keeper.TimeRecord",
 				    pk: latest_key + 1,
@@ -136,7 +135,6 @@ $(function() {
 							task_date: time_arr[0],
 					}
 				  };
-				  console.log(item);
 				  recordsStore.add(item);
 				  return tx.complete;
 				}).then(function() {
@@ -158,16 +156,20 @@ $(function() {
 	$("#stop").hide();
 	$("#submit").hide();
 
-	function change_sub_task() {
-		sub_list_values = [];
+	function change_sub_task() { 
+		/* primary_task_list and sub_task_list vars are set during idbop.js!  */
+
+		sub_list_values = []; 
 		sub_list_names = [];
 		k = 0;
 		var selected_task = document.getElementById("primary_task");
 		for (i = 1; i < sub_task_list.length; i++) {
-			if(sub_task_list[i].primary_task == selected_task.value) {
-				sub_list_values[k] = sub_task_list[i].id;
-				sub_list_names[k] = sub_task_list[i].name;
-				k = k + 1;
+			if(typeof(sub_task_list[i])!="undefined"){
+				if(sub_task_list[i].primary_task == selected_task.value) {
+					sub_list_values[k] = i;
+					sub_list_names[k] = sub_task_list[i].name;
+					k = k + 1;
+				}
 			}
 		}
 

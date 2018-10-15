@@ -31,27 +31,84 @@
         return;
       }
       for (var field in cursor.value) {
-          if(field=='fields'){
-            recordsData=cursor.value[field];
-            console.log(recordsData);
-            for(var key in recordsData){
-              if(key =='task_date'){
-                var task_date = '<td>'+new Date(recordsData[key]).toLocaleDateString()+'</td>';
+          if(cursor.value.model == "time_keeper.TimeRecord"){ 
+            if(field=='fields'){
+              recordsData=cursor.value[field];
+              for(var key in recordsData){
+                if(key =='task_date'){
+                  var task_date = '<td>'+new Date(recordsData[key]).toLocaleDateString()+'</td>';
+                }
+                if(key =='primary_task'){
+                  var primary_task = '<td>'+recordsData[key]+'</td>';
+                }
+                if(key =='sub_task'){
+                  var sub_task = '<td>'+recordsData[key]+'</td>';
+                }
+                if(key =='start_time'){
+                  var start_time = '<td>'+new Date(recordsData[key]).toLocaleTimeString()+'</td>';
+                }
+                if(key =='end_time'){
+                  var end_time = '<td>'+new Date(recordsData[key]).toLocaleTimeString()+'</td>';
+                }
               }
-              if(key =='primary_task'){
-                var primary_task = '<td>'+recordsData[key]+'</td>';
-              }
-              if(key =='sub_task'){
-                var sub_task = '<td>'+recordsData[key]+'</td>';
-              }
-              if(key =='start_time'){
-                var start_time = '<td>'+new Date(recordsData[key]).toLocaleTimeString()+'</td>';
-              }
-              if(key =='end_time'){
-                var end_time = '<td>'+new Date(recordsData[key]).toLocaleTimeString()+'</td>';
+              post=post+'<tr>'+task_date+primary_task+sub_task+start_time+end_time+'</tr>';
+            }
+          }
+        }
+      return cursor.continue().then(logItems);
+    });
+}
+
+  if (window.location.pathname == "/timer" || window.location.pathname == "/") {
+  var primary_task_list= [];
+  var sub_task_list = [];
+  var list_index;
+  var primary_start_index = "";
+  var sub_start_index = "";
+
+  dbPromise.then(function(db){
+    var tx = db.transaction('records', 'readonly');
+      var recordsStore = tx.objectStore('records');
+      return recordsStore.openCursor();
+  }).then(function logItems(cursor) {
+      if (!cursor) {
+        //if true means we are done cursoring over all records in records.
+        var post = document.getElementById("primary_task").innerHTML;
+        console.log(sub_task_list);
+        for (var item in primary_task_list){
+          post = post + '<option value=' + item + '>' + primary_task_list[item].name + '</option>';
+        }
+        document.getElementById("primary_task").innerHTML=post;
+        return;
+      }
+      for (var field in cursor.value) {
+          if(cursor.value.model == "time_keeper.PrimaryTask"){ 
+            if(field=='fields'){
+              recordsData=cursor.value[field];
+              list_index = recordsData['id'];
+              primary_task_list[list_index] = {};
+              for(var key in recordsData){
+                if(key =='name'){
+                  primary_task_list[list_index].name = recordsData[key];
+                }
               }
             }
-            post=post+'<tr>'+task_date+primary_task+sub_task+start_time+end_time+'</tr>';
+          }
+          if(cursor.value.model == "time_keeper.SubTask"){ 
+            if(field=='fields'){
+              recordsData=cursor.value[field];
+              list_index = recordsData['id'];
+              sub_task_list[list_index] = {};
+              for(var key in recordsData){
+                if(key =='name'){
+                  sub_task_list[list_index].name = recordsData[key];
+                }
+                if(key =='primary_task'){
+                  sub_task_list[list_index].primary_task = recordsData[key];
+                }
+              }
+              //arrange object by primary task
+            }
           }
         }
       return cursor.continue().then(logItems);

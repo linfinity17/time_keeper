@@ -9,7 +9,7 @@
 	<table>
 	<tr>
 	<td>User: </td>
-	<td>{{ user }}</td>
+	<td id="username">{{ user }}</td>
 	</tr>
 	<tr>
 	<td><label>Task: </label></td>
@@ -51,7 +51,7 @@
 <script type="text/javascript" src="{% static 'js/test.js' %}"></script>
 
 <br><br><br>
-<button style="padding:5px 5px"><a href="/postdata" id="save_link" style="color:black">Go to Save Page</a></button>
+<button id = "save_button" style="padding:5px 5px"><a href="/postdata" id="save_link" style="color:black">Go to Save Page</a></button>
 
 </div>
 {% endblock %}

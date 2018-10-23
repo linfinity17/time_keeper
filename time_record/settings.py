@@ -130,7 +130,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #PWA Web App requirements
 
-PWA_APP_NAME = 'Ching Dynasty'
+PWA_APP_NAME = 'Time and Motion'
 PWA_APP_DESCRIPTION = "Time Keeper"
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'

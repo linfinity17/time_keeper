@@ -8,6 +8,8 @@ self.addEventListener('install', function(event) {
         'static/js/test.js',
         'static/js/serviceworker.js',
         'static/css/style.css',
+        'static/fonts/Dosis-Light.ttf',
+        'static/fonts/Roboto-Regular.ttf',
       ]);
     })
   );
@@ -48,8 +50,15 @@ self.addEventListener('fetch', function(event) {
         return;
       }
 
+      if ((requestUrl.pathname === '/timer')) {
+        event.respondWith(caches.match('/timer'));
+        return;
+      }
+
+
     event.respondWith(
       caches.match(event.request).then(function(response) {
+        console.log(response);
         return response || fetch(event.request);
       })
     );

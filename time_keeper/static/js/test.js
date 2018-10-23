@@ -15,11 +15,11 @@ $(function() {
 	var end_flag;
 
 		if (navigator.onLine) {
-			$("#save_link").show();
+			$("#save_button").show();
 		}
 
 		else{
-			$("#save_link").hide();
+			$("#save_button").hide();
 		}
 
 		function clock() {
@@ -100,9 +100,9 @@ $(function() {
 			}
 
 			else if (start_flag == 1 && end_flag == 1) {
-				p_task_text = primary_task_list[p_task].name;	
+				p_task_text = primary_task_list[p_task].name;
 				s_task_text = sub_task_list[s_task].name;
-			
+
 				console.log(p_task);
 				console.log(p_task_text);
 				console.log(s_task);
@@ -138,11 +138,11 @@ $(function() {
 				  recordsStore.add(item);
 				  return tx.complete;
 				}).then(function() {
-				  alert('Item has been added to the records');
+				    alert('Item has been added to the records');
 				  start_flag = 0;
 				  end_flag = 0;
+				  location.reload();
 				});
-				location.reload();
 			}
 			else if (start_flag != 1) {
 				alert("Timer has not been activated.")
@@ -156,10 +156,10 @@ $(function() {
 	$("#stop").hide();
 	$("#submit").hide();
 
-	function change_sub_task() { 
+	function change_sub_task() {
 		/* primary_task_list and sub_task_list vars are set during idbop.js!  */
 
-		sub_list_values = []; 
+		sub_list_values = [];
 		sub_list_names = [];
 		k = 0;
 		var selected_task = document.getElementById("primary_task");

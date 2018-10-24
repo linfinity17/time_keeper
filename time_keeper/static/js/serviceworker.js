@@ -51,14 +51,13 @@ self.addEventListener('fetch', function(event) {
       }
 
       if ((requestUrl.pathname === '/timer')) {
-        event.respondWith(caches.match('/timer'));
+          console.log("test");
         return;
       }
 
 
     event.respondWith(
       caches.match(event.request).then(function(response) {
-        console.log(response);
         return response || fetch(event.request);
       })
     );

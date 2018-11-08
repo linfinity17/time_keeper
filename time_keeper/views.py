@@ -57,6 +57,8 @@ def getdata(request):
 						"end_time": item.end_time.strftime('%Y-%m-%dT%H:%M:%SZ'),
 						"pause_stamps": item.pause_stamps,
 						"task_date": item.task_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+						"no_of_transactions": item.no_of_transactions,
+						"remarks": item.remarks,
 						}
 					}
 			pk = item.local_id
@@ -124,8 +126,10 @@ def postdata(request):
 						end_time = item["fields"]["end_time"],
 						pause_stamps = item["fields"]["pause_stamps"],
 						task_date = item["fields"]["task_date"],
+						no_of_transactions = item["fields"]["no_of_transactions"],
+						remarks = item["fields"]["remarks"],
 						)
-			return render(request,template,{'form':form})
+			return HttpResponseRedirect(reverse('index'))
 
 	return render(request,template,{'form':form})
 

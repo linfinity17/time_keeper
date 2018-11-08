@@ -35,6 +35,14 @@
 	<td> Stop Time: </td>
 	<td id="stop_time"></td>
 	</tr>
+	<tr>
+	<td> No. of Transactions: </td>
+	<td><input type="number" min="0" id="no_of_transactions" name="no_of_transactions" value = "1"></td>
+	</tr>
+	<tr>
+	<td> Remarks: </td>
+	<td><textarea id="remarks" rows="5" cols="25"></textarea></td>
+	</tr>
 	</table>
 	<p></p>
 	<label hidden>Date: </label>
@@ -49,8 +57,13 @@
 	<p></p>
 	<button id="reset" style="margin-top: 10px; display:none">Reset?</button>
 <script type="text/javascript" src="{% static 'js/test.js' %}"></script>
-
-<br><br><br>
+<script type="text/javascript">
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        alert("Please use your mobile device.");
+        window.location = '/logout';
+    }
+</script>
+<br>
 <button id = "save_button" style="padding:5px 5px"><a href="/postdata" id="save_link" style="color:black">Go to Save Page</a></button>
 
 </div>

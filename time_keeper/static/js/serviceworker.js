@@ -50,8 +50,8 @@ self.addEventListener('fetch', function(event) {
         return;
       }
 
-      if ((requestUrl.pathname === '/timer')) {
-          console.log("test");
+      if ((requestUrl.pathname === '/timer') && !navigator.onLine) {
+          event.respondWith(caches.match('/timer'));
         return;
       }
 

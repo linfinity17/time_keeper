@@ -13,6 +13,7 @@ $(function() {
 	var time_arr = [];
 	var start_flag;
 	var end_flag;
+	var no_of_transactions;
 
 		if (navigator.onLine) {
 			$("#save_button").show();
@@ -94,9 +95,17 @@ $(function() {
 		$("#submit").click(function() {
 			p_task = $("#primary_task").val();
 			s_task = $("#sub_task").val();
+			no_of_transactions = parseInt($("#no_of_transactions").val());
 
 			if (p_task == "" || s_task == "") {
 				alert("Please populate tasks");
+				return;
+			}
+
+			else if (isNaN(no_of_transactions)) {
+				alert("Please fill out number of transactions.");
+				return;
+
 			}
 
 			else if (start_flag == 1 && end_flag == 1) {
@@ -133,6 +142,8 @@ $(function() {
 							end_time: end_time,
 							pause_stamps: time_arr,
 							task_date: time_arr[0],
+							no_of_transactions: no_of_transactions,
+							remarks: $("#remarks").val(),
 					}
 				  };
 				  recordsStore.add(item);

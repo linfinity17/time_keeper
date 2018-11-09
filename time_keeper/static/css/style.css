@@ -1,140 +1,124 @@
-		@font-face {
-			font-family: Dosis;
-			src: url('/static/fonts/Dosis-Light.ttf') format("truetype");
-		}
+* {
+	box-sizing: border-box;
+}
 
-		.dropdown-span{
-			text-align: center;
-			color: white;
-			background-color: #5bc0de;
-		}
-		span{
-			color: white;
-		}
-		.alink{
-			text-decoration: none;
-			color: white;
-		}
-		.alink:hover{
-			text-decoration: none;
-			color: white;
-		}
-		#content{
-			padding-bottom: 5%;
-		}
-		html,body{
-		  	font-family: Dosis;
-			margin: 0;
-		  	padding: 0;
-		  	height: 100%;
-		}
-		.wrapper{
-			position: relative;
-			min-height: 100%;
-        }
+@font-face {
+	font-family: Dosis;
+	src: url('/static/fonts/Dosis-Light.ttf') format("truetype");
+}
 
-        a{
-        	text-decoration: none;
-        	color:white;
-        }
+html,body{
+  	font-family: Dosis;
+	margin: 0;
+  	padding: 0;
+  	height: 100%;
+}
 
-        button {
-		    border: none;
-		    color: white;
-		    padding: 15px 32px;
-		    text-align: center;
-		    text-decoration: none;
-		    display: inline-block;
-		    font-size: 16px;
-		    font-family: Dosis;
-        }
+a{
+	text-decoration: none;
+	color:white;
+}
 
-        select{
-        	height:40px;
-        	font-size: 80%;
-        	margin:5px;
-        	font-family: Dosis;
-        }
+button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: Dosis;
+}
 
-        input {
-        	font-size: 100%;
-        	font-family: Dosis;
-        }
+select{
+	height:2.5em;
+	font-size: 80%;
+	font-family: Dosis;
+}
 
+input {
+	font-size: 100%;
+	font-family: Dosis;
+}
 
-        .start {
-        	background-color: #5bc0de;
-        }
+table {
+  border-collapse:separate; 
+  border-spacing: 0 0.5em;
+}
 
-        .stop {
-        	background-color: #bf0000;
-        }
+.start {
+	background-color: #5bc0de;
+}
 
-        .submit {
-		    background-color: #4CAF50; /* Green */
-		    border: none;
-		    color: white;
-		    padding: 15px 32px;
-		    text-align: center;
-		    text-decoration: none;
-		    display: inline-block;
-		    font-size: 16px;
-		}
+.stop {
+	background-color: #bf0000;
+}
+
+.submit {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.login{
+	padding-top: 3em;
+	padding-left: 1em;
+}
 
 
 
-		#offline_data {
-		    border-collapse: collapse;
-    		width: 600px;
-    		white-space: nowrap;
-    		transform-origin: top left;
-    		transform: scale(.8);
-		}
+#offline_data {
+    border-collapse: collapse;
+	width: 600px;
+	white-space: nowrap;
+	transform-origin: top left;
+	transform: scale(.8);
+}
 
-		#primary_task {
-		    width: 200px;
-		}
-
-		#sub_task {
-		    width: 200px;
-		}
+#primary_task, #no_of_transactions, #sub_task, #remarks  {
+    width: 200px;
+}
 
 
 
-        /* Section Styles */
 
-		.main-nav {
-		  width: 100%;
-		  min-height: 30px;
-		  padding: 10px;
-		  position: fixed;
-		  text-align: center;
-		  background-color:#0168b3;
-		}
-		.nav {
-		  display: flex;
-		  justify-content: space-around;
-		  font-weight: 700;
-		  list-style-type: none;
-		  margin: 0 auto;
-		  padding: 0px;
+/* Section Styles */
 
-		}
-    	.nav .name {
-		    display: block;
-		    margin-right: auto;
-		    color: white;
-		  }
+.main-nav {
+  width: 100%;
+  padding: 10px;
+  position: fixed;
+  text-align: center;
+  background-color:#0168b3;
+}
+.nav {
+  display: flex;
+  justify-content: space-around;
+  font-weight: 700;
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0px;
 
-		.nav li {
-		  color: white;
-		  padding: 5px 10px 10px 10px;
-		  margin-right: 	10px;
-		}
-		.nav a {
-		  color: white;
-		  transition: all .5s;
-		}
-		.nav a:hover {
-		  color: white
-		}
+}
+.nav .name {
+    display: block;
+    margin-right: auto;
+    color: white;
+  }
+
+.nav li {
+  color: white;
+  padding: 5px 10px 10px 10px;
+}
+.nav a {
+  color: white;
+  transition: all .5s;
+}
+.nav a:hover {
+  color: white
+}

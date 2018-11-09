@@ -2,10 +2,8 @@
 
 {% block content %}
 {% load static %}
-
-	<div style="margin-left: 20px; text-align: left; width:50%" >
-		<br><br><br><br><br><br>
 		<p>{{message}}</p>
+		<div class="login">
 		<form action='' method='POST'>
 			<label>Username: </label>
 			<input type="text" name="username" required id="user">
@@ -13,10 +11,7 @@
 			{% csrf_token %}
 			<input type='submit' class="submit" id='submit_data' value="Login">
 		</form>
-	</div>
-	<script>
-	    document.getElementById("logout").hidden = true;
-	</script>
+		</div>
 
 </html>
 

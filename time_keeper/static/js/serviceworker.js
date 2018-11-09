@@ -7,7 +7,7 @@ self.addEventListener('install', function(event) {
         'static/js/idbop.js',
         'static/js/test.js',
         'static/js/serviceworker.js',
-        'static/css/stylev2.css',
+        'static/css/stylev4.css',
         'static/fonts/Dosis-Light.ttf',
         'static/fonts/Roboto-Regular.ttf',
       ]);

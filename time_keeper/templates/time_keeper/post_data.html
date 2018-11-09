@@ -37,16 +37,14 @@
 					});
 		});
 	</script>
-	<div style="margin-left:20px">
-		<br><br><br><br><br><br>
+	<div>
 		<form action='' method='POST'>
 			<input hidden type="text" name="data" required id="id_data">
 			{% csrf_token %}
 			<input type='submit' class='submit' id='submit_data' value="Save Data">
 		</form>
 	</div>
-	<div style="transform-origin: top left ; transform: scale(.9)">
-		<br><br>
+	<div>
 		<table id="offline_data">
 		<!-- display here -->
 		</table>

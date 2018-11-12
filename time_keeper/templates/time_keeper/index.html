@@ -15,7 +15,6 @@
     </select>
     </td>
     </tr>
-	<p></p>
 	<tr>
 	<td><label>Sub-Task: </label></td>
 	<td>
@@ -40,18 +39,13 @@
 	<td><textarea id="remarks" rows="5" cols="25"></textarea></td>
 	</tr>
 	</table>
-	<p></p>
 	<label hidden>Date: </label>
 	<input hidden type="Date" name="task_date" id="task_date">
-	<p></p>
-
-	<p></p>
 	<button id="start" class="start">Start</button>
 	<button id="stop" class="stop">Stop</button>
-	<button type="submit" class="submit" id="submit" style="background-color:#03c07c; color:white;"> Submit </button>
-	<p hidden id="timer"></p>
-	<p></p>
-	<button id="reset" style="margin-top: 10px; display:none">Reset?</button>
+	<button type="submit" class="submit" id="submit"> Submit </button>
+	<br>
+	<a href="/postdata" id="save_button">Go to Save Page</a>
 <script type="text/javascript" src="{% static 'js/test.js' %}"></script>
 <script type="text/javascript">
     if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -59,7 +53,5 @@
         window.location = '/logout';
     }
 </script>
-<br>
-<button id = "save_button" style="padding:5px 5px"><a href="/postdata" id="save_link" style="color:black">Go to Save Page</a></button>
 
 {% endblock %}

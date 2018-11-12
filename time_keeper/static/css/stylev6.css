@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Dosis;
+  src: url('/static/fonts/Dosis-Light.ttf') format("truetype");
+}
+
+html,body{
+  font-family: Dosis;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 18px;
+}
+
+#loader{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+}
+
+.toggle_loader {
+  display: none;
+}
+
+
+a{
+  text-decoration: none;
+  color:white;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    font-family: Dosis;
+}
+
+select{
+  height:2.5em;
+  font-size: 80%;
+  font-family: Dosis;
+}
+
+input {
+  font-family: Dosis;
+}
+
+table {
+  border-collapse:separate;
+  border-spacing: 0 0.75em;
+}
+
+.start {
+  background-color: #5bc0de;
+}
+
+.stop {
+  background-color: #bf0000;
+}
+
+.submit {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+}
+
+.login{
+  padding-top: 3em;
+}
+
+th {
+  width: 20%;
+}
+
+#login, #start, #stop, #submit, #save_button, #submit_data {
+  margin: 10px 0px;
+  width: 100%;
+  max-width: 516px;
+}
+
+#save_button {
+    border: none;
+    background-color: lightgray;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    font-family: Dosis;
+}
+
+#user {
+  margin: 10px 0px 20px 0px;
+  height: 2em;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 516px;
+}
+
+
+#offline_data {
+    padding-top: 2em;
+    font-size: 0.75em;
+    display: block;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#primary_task, #no_of_transactions, #sub_task, #remarks  {
+    width: 100%;
+    border: solid rgb(169,169,169) 1px;
+  font-family: Dosis;
+
+}
+
+#no_of_transactions,#remarks {
+    padding-left:5px;
+}
+
+#remarks {
+    border: solid rgb(169,169,169) 2px;
+}
+
+/* Section Styles */
+
+.main-nav {
+  width: 100%;
+  padding: 10px;
+  position:fixed;
+  text-align: center;
+  background-color:#0168b3;
+}
+.nav {
+  display: flex;
+  justify-content: space-around;
+  font-weight: 700;
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0px;
+
+}
+.nav .name {
+    display: block;
+    margin-right: auto;
+    color: white;
+  }
+
+.nav li {
+  color: white;
+  padding: 5px 10px 10px 10px;
+}
+.nav a {
+  color: white;
+  transition: all .5s;
+}
+.nav a:hover {
+  color: white
+}

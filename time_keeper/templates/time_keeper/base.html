@@ -9,16 +9,20 @@
 	<meta charset="utf-8">
 	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
 	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-	<link rel="stylesheet" href="{% static 'css/stylev4.css' %}">
+	<link rel="stylesheet" href="{% static 'css/stylev6.css' %}">
 	<link rel="stylesheet" href="{% static 'css/grid.css' %}">
 </head>
 
 
 <body>
+	<div id="loader"></div>
+	<script type="text/javascript">
+		document.getElementById("loader").className = "";
+	</script>
 	<div class="main_container">
 	    <nav class="main-nav">
 	        <ul class="nav">
-	          <li class="name"><a id="main_header" href="#">SBC Time and Motion</a></li>
+	          <li class="name"><a id="main_header" href="#"><img src="{% static 'images/sbc_logo.png' %}" height="20"> SBC Time and Motion</a></li>
 	          <li><a id="logout" href="#">Logout</a></li>
 	        </ul>
 	    </nav>
@@ -33,6 +37,9 @@
 	<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
 	<script type="text/javascript">
+
+		setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_loader'); }, 250);
+
 		document.getElementById("logout").onclick = function(){
 			if (window.location.pathname == "/login") {
 				document.getElementById("logout").href = "#";

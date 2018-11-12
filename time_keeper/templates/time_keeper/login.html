@@ -5,11 +5,12 @@
 		<p>{{message}}</p>
 		<div class="login">
 		<form action='' method='POST'>
-			<label>Username: </label>
+			<label id='username'>Username: </label>
+			<br>
 			<input type="text" name="username" required id="user">
-			<br><br><br>
+			<br>
 			{% csrf_token %}
-			<input type='submit' class="submit" id='submit_data' value="Login">
+			<input type='submit' class="submit" id='login' value="Login">
 		</form>
 		</div>
 

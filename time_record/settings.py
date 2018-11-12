@@ -25,7 +25,7 @@ PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'servi
 SECRET_KEY = 'pke7%#9mh0_6zgzt4r8t8vllq#llh$#$-b1*))s*y(7%4w=p27'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["linumerable.pythonanywhere.com","127.0.0.1"]
 

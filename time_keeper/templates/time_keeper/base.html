@@ -15,10 +15,7 @@
 
 
 <body>
-	<div id="loader"></div>
-	<script type="text/javascript">
-		document.getElementById("loader").className = "";
-	</script>
+
 	<div class="main_container">
 	    <nav class="main-nav">
 	        <ul class="nav">
@@ -26,8 +23,11 @@
 	          <li><a id="logout" href="#">Logout</a></li>
 	        </ul>
 	    </nav>
-
 		<div class="content-container">
+		<div id="loader"></div>
+			<script type="text/javascript">
+				document.getElementById("loader").className = "";
+			</script>
 			{% block content %}{% endblock %}
 		</div>
 		<div class="footer bg-dark">
@@ -37,37 +37,41 @@
 	<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
 	<script type="text/javascript">
+		$(function() {
+			setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_loader'); }, 250);
+			setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_none'); }, 750);
 
-		setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_loader'); }, 250);
 
-		document.getElementById("logout").onclick = function(){
-			if (window.location.pathname == "/login") {
-				document.getElementById("logout").href = "#";
-				return;
-			}
-
-			else {
-				ans = confirm("Are you sure you want to logout? \n\n Make sure to save data! All unsaved data will be lost.");
-				if (ans) {
-					document.getElementById("logout").href = "/logout";
-				}
-				else {
+			document.getElementById("logout").onclick = function(){
+				if (window.location.pathname == "/login") {
 					document.getElementById("logout").href = "#";
+					return;
+				}
+
+				else {
+					ans = confirm("Are you sure you want to logout? \n\n Make sure to save data! All unsaved data will be lost.");
+					if (ans) {
+						document.getElementById("logout").href = "/logout";
+					}
+					else {
+						document.getElementById("logout").href = "#";
+					}
 				}
 			}
-		}
 
-		if(navigator.onLine) {
-		document.getElementById("main_header").href = "/timer";
-		document.getElementById("logout").hidden = false;
-			if (window.location.pathname == "/login") {
-				document.getElementById("logout").hidden = true;
+			if(navigator.onLine) {
+			document.getElementById("main_header").href = "/timer";
+			document.getElementById("logout").hidden = false;
+				if (window.location.pathname == "/login") {
+					document.getElementById("logout").hidden = true;
+				}
 			}
-		}
-		else{
-		document.getElementById("main_header").href = "#";
-		document.getElementById("logout").hidden = true;
-		}
+			else{
+			document.getElementById("main_header").href = "#";
+			document.getElementById("logout").hidden = true;
+			}
+		});
+
 	</script>
 </body>
 </html>

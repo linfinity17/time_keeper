@@ -41,6 +41,25 @@
 			setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_loader'); }, 250);
 			setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_none'); }, 750);
 
+// 			var cond_1 = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+// 			var cond_2 = (/iPhone|iPad|iPod/i.test(navigator.userAgent));
+			
+// 			var isChrome = !!window.chrome && !!window.chrome.webstore;
+
+//             alert(isChrome);
+//             alert(navigator.userAgent);
+
+// 			if (!cond_1 || cond_2) {
+// 				if (cond_1) {
+// 					alert("Please use chrome web browser to install app.");
+// 				}
+// 				if (cond_2) {
+// 					alert("This application does not work on Apple devices.");
+// 				}
+// 				document.getElementById("loader").classList.toggle('toggle_loader');
+// 				document.getElementById("loader").classList.toggle('toggle_none');
+// 			}
+
 
 			document.getElementById("logout").onclick = function(){
 				if (window.location.pathname == "/login") {

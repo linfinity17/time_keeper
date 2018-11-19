@@ -135,7 +135,7 @@ PWA_APP_DESCRIPTION = "Time Keeper"
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
-PWA_APP_START_URL = '/timer'
+PWA_APP_START_URL = '/'
 PWA_APP_ICONS = [
   {
     "src": "/static/images/shio-192.png",

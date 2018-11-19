@@ -18,6 +18,9 @@
     });
   });
   //retrive data from idb and display on page.
+
+  var count = 0;
+  var count1 = 0;
   if (window.location.pathname == "/postdata") {
   var post="<tr><th>Date</th><th>Primary Task</th><th>Sub Task</th><th>Start Time</th><th>End Time</th></tr>";
   dbPromise.then(function(db){
@@ -31,10 +34,16 @@
         return;
       }
       for (var field in cursor.value) {
-          if(cursor.value.model == "time_keeper.TimeRecord"){ 
+        var a = cursor.value.model + " " + field;
+        count = count + 1;
+          if (count < 10) {
+              alert(a);
+          }
+          if(cursor.value.model == "time_keeper.TimeRecord"){
             if(field=='fields'){
               recordsData=cursor.value[field];
               for(var key in recordsData){
+                //   alert(recordsData[key]);
                 if(key =='task_date'){
                   var task_date = '<td>'+new Date(recordsData[key]).toLocaleDateString()+'</td>';
                 }
@@ -82,7 +91,12 @@
         return;
       }
       for (var field in cursor.value) {
-          if(cursor.value.model == "time_keeper.PrimaryTask"){ 
+        var b = cursor.value.model + " " + field;
+        count1 = count1 + 1;
+          if (count1 < 10) {
+              alert(b);
+          }
+          if(cursor.value.model == "time_keeper.PrimaryTask"){
             if(field=='fields'){
               recordsData=cursor.value[field];
               list_index = recordsData['id'];
@@ -94,7 +108,7 @@
               }
             }
           }
-          if(cursor.value.model == "time_keeper.SubTask"){ 
+          if(cursor.value.model == "time_keeper.SubTask"){
             if(field=='fields'){
               recordsData=cursor.value[field];
               list_index = recordsData['id'];

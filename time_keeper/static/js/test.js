@@ -112,11 +112,13 @@ $(function() {
 				p_task_text = primary_task_list[p_task].name;
 				s_task_text = sub_task_list[s_task].name;
 
-				console.log(p_task);
-				console.log(p_task_text);
-				console.log(s_task);
-				console.log(s_task_text);
-				dbPromise.then(function(db) {
+				//write data into the indexed database
+
+				var dbPromise_record = idb.open('record-db', 5, function(upgradeDb) {
+					upgradeDb.createObjectStore('records',{keyPath:'pk'});
+				});
+
+				dbPromise_record.then(function(db) {
 				  var tx = db.transaction('records', 'readonly');
 				  var recordsStore = tx.objectStore('records');
 				  return recordsStore.openCursor();
@@ -127,7 +129,7 @@ $(function() {
 				  latest_key = cursor.key;
 				  return cursor.continue().then(logItems);
 				}).then(function(){
-					return dbPromise;
+					return dbPromise_record;
 				}).then(function(db) {
 				  var tx = db.transaction('records', 'readwrite');
 				  var recordsStore = tx.objectStore('records');

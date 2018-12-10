@@ -15,7 +15,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker.js')
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'time_keeper/static/js', 'serviceworker_v1.js')
 
 
 # Quick-start development settings - unsuitable for production
@@ -135,15 +135,15 @@ PWA_APP_DESCRIPTION = "Time Keeper"
 PWA_APP_THEME_COLOR = '#0A0302'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'
 PWA_APP_DISPLAY = 'standalone'
-PWA_APP_START_URL = '/'
+PWA_APP_START_URL = '/login'
 PWA_APP_ICONS = [
   {
-    "src": "/static/images/shio-192.png",
+    "src": "/static/images/watch-192.png",
     "type": "image/png",
     "sizes": "192x192"
   },
   {
-    "src": "/static/images/shio-512.png",
+    "src": "/static/images/watch-512.png",
     "type": "image/png",
     "sizes": "512x512"
   }

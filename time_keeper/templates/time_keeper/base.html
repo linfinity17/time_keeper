@@ -7,8 +7,8 @@
 	<title>Timer App</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta charset="utf-8">
-	<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
 	<link rel="stylesheet" href="{% static 'css/stylev6.css' %}">
 	<link rel="stylesheet" href="{% static 'css/grid.css' %}">
 </head>
@@ -33,9 +33,9 @@
 		<div class="footer bg-dark">
 		</div>
 	</div>
-
 	<script type="text/javascript" src="{% static 'js/idb.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/idbop.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/idbop_task.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/idbop_record.js' %}"></script>
 	<script type="text/javascript">
 		$(function() {
 			setTimeout(function(){ document.getElementById("loader").classList.toggle('toggle_loader'); }, 250);
@@ -43,7 +43,7 @@
 
 // 			var cond_1 = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 // 			var cond_2 = (/iPhone|iPad|iPod/i.test(navigator.userAgent));
-			
+
 // 			var isChrome = !!window.chrome && !!window.chrome.webstore;
 
 //             alert(isChrome);

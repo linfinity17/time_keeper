@@ -15,9 +15,13 @@ def redir(request):
 
 def success(request):
 	template='time_keeper/success.html'
-	return render(request,template)
+	username=request.user
+	print(username)
+	return render(request,template,{'username':username})
 
 def login_page(request):
+	if str(request.user) != "AnonymousUser":
+		return HttpResponseRedirect(reverse('index'))
 	template='time_keeper/login.html'
 	if request.method == 'POST':
 		logged_user = request.POST['username'].strip()
@@ -35,14 +39,17 @@ def logout_page(request):
 	logout(request)
 	return HttpResponseRedirect(reverse('login_page'))
 
+def reset(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login_page'))
+
 @login_required(login_url="/login")
 def base_layout(request):
 	template='time_keeper/index.html'
 	return render(request,template)
 
 
-def getdata(request):
-	user_logged = request.user
+def get_record(request,user_logged):
 	dict_list = []
 	results=models.TimeRecord.objects.filter(user=user_logged)
 	if results:
@@ -67,7 +74,12 @@ def getdata(request):
 	else:
 		pk = 1
 
+	return HttpResponse(json.dumps(dict_list))
+
+def get_task(request):
+	dict_list = []
 	results=models.PrimaryTask.objects.all()
+	pk = 1;
 	for item in results:
 		data_dict = {"model": "time_keeper.PrimaryTask",
 			"pk": pk,
@@ -101,7 +113,7 @@ def getdata(request):
 
 	return HttpResponse(json.dumps(dict_list))
 
-def postdata(request):
+def post_data(request):
 	template='time_keeper/post_data.html'
 	form = forms.DataForm()
 	if request.method == 'POST':

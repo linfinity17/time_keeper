@@ -85,7 +85,7 @@ table {
     font-size: 18px;
 }
 
-.login{
+.login, .reminder {
   padding-top: 3em;
 }
 
@@ -93,10 +93,15 @@ th {
   width: 20%;
 }
 
-#login, #start, #stop, #submit, #save_button, #submit_data {
+.reminder, #login, #start, #stop, #submit, #save_button, #submit_data {
   margin: 10px 0px;
   width: 100%;
   max-width: 516px;
+}
+
+#chrome_link{
+    color: blue;
+    font-weight: bold;
 }
 
 #save_button {

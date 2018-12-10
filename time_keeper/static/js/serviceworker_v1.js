@@ -4,15 +4,20 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(staticCacheName).then(function(cache) {
       return cache.addAll([
-        'static/js/idbop3.js',
+        'static/js/idb.js',
+        'static/js/jquery.js',
+        'static/js/idbop_task.js',
+        'static/js/idbop_record.js',
         'static/js/test2.js',
-        'static/js/serviceworker2.js',
+        'static/js/serviceworker_v1.js',
+        'static/css/grid.css',
+        'static/css/normalize.css',
         'static/css/stylev6.css',
         'static/fonts/Dosis-Light.ttf',
         'static/fonts/Roboto-Regular.ttf',
         'static/images/sbc_logo.png',
-        'static/images/shio-192.png',
-        'static/images/shio-512.png',
+        'static/images/watch-192.png',
+        'static/images/watch-512.png',
         'manifest.json',
       ]);
     })
@@ -37,7 +42,7 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  if (requestUrl.pathname === '/logout') {
+  if (requestUrl.pathname === '/logout' || requestUrl.pathname === '/reset') {
     caches.delete(staticCacheName);
     var dbs = ['record-db'];
 
@@ -61,14 +66,15 @@ self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
       console.log(response);
+      if (requestUrl.pathname === '/') {
+        response = caches.match('/timer');
+      }
+
+
       if (response) {
         return response;
       }
 
-      if (requestUrl.pathname === '/') {
-        response = caches.match('/timer');
-        return response;
-      }
 
       if ((requestUrl.pathname === '/login') && !navigator.onLine) {
         response = caches.match('/timer');

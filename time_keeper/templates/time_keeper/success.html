@@ -1,6 +1,8 @@
 {% extends 'time_keeper/base.html' %}
 {% block content %}
+<p id="username" hidden>{{ username }}</p>
+<p>Loading...</p>
 <script type="text/javascript">
-	t1 = window.setTimeout(function(){ window.location = "/timer"; },100); 
+	t1 = window.setTimeout(function(){ window.location = "/timer"; },5000);
 </script>
 {% endblock %}
